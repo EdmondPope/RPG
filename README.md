@@ -1,109 +1,109 @@
 A game where you are a guy running from an imortal snail on a tileset map in godot and there is y sorting and collistions the map is one long path here is the code
 
 
-extends CharacterBody2D
+	extends CharacterBody2D
 
 
-func enemy():
-	pass
+	func enemy():
+		pass
 
-var speed = 100             
-var player = null
+	var speed = 100             
+	var player = null
 
-func _ready():
-	$AnimatedSprite2D.play("Front  Jump")
-	player = get_tree().get_first_node_in_group("player")
+	func _ready():
+		$AnimatedSprite2D.play("Front  Jump")
+		player = get_tree().get_first_node_in_group("player")
 	
 
 
-func _physics_process(delta):
-	if player:
-		position += (player.position - position).normalized() * speed * delta
+	func _physics_process(delta):
+		if player:
+			position += (player.position - position).normalized() * speed * delta
 
-func Player():
-	pass
-
-
-
-
-func _on_detection_area_2_body_entered(body):
-	if body.is_in_group("player"):
-		get_tree().reload_current_scene()
+	func Player():
+		pass
 
 
 
-extends CharacterBody2D
 
-var enemyinattackrange = false
-var enemyattackcooldown = true
-var health = 100
-var playeralive = true
+	func _on_detection_area_2_body_entered(body):
+		if body.is_in_group("player"):
+			get_tree().reload_current_scene()
 
 
-const speed = 100
 
-var current_dir = "none"
+	extends CharacterBody2D
+
+	var enemyinattackrange = false
+	var enemyattackcooldown = true
+	var health = 100
+	var playeralive = true
+
+
+	const speed = 100
+
+	var current_dir = "none"
  
-func _ready():
-	$AnimatedSprite2D.play("Front Idle")
+	func _ready():
+		$AnimatedSprite2D.play("Front Idle")
 
 
 
-func _physics_process(delta):
-	player_movement(delta)
-	enemyattack()
+	func _physics_process(delta):
+		player_movement(delta)
+		enemyattack()
 	
 	
 	
-func player_movement(delta):
+	func player_movement(delta):
 			
-	if Input.is_action_pressed("ui_right"):
-		current_dir = "right"
-		play_anim(1)
+		if Input.is_action_pressed("ui_right"):
+			current_dir = "right"
+			play_anim(1)
 		
-		velocity.x = speed 
-		velocity.y = 0
+			velocity.x = speed 
+			velocity.y = 0
 		
-	elif Input.is_action_pressed("ui_left"):
-		current_dir = "left"
-		play_anim(1)
-		velocity.x = -speed 
-		velocity.y = 0
-	elif Input.is_action_pressed("ui_up"):
-		current_dir = "up"
-		play_anim(1)
-		velocity.y = -speed 
-		velocity.x = 0
-	elif Input.is_action_pressed("ui_down"):
-		current_dir = "down"
-		play_anim(1)
-		velocity.y = speed 
-		velocity.x = 0
-	else:
-		play_anim(0)
-		velocity.x = 0
-		velocity.y = 0
+		elif Input.is_action_pressed("ui_left"):
+			current_dir = "left"
+			play_anim(1)
+			velocity.x = -speed 
+			velocity.y = 0
+		elif Input.is_action_pressed("ui_up"):
+			current_dir = "up"
+			play_anim(1)
+			velocity.y = -speed 
+			velocity.x = 0
+		elif Input.is_action_pressed("ui_down"):
+			current_dir = "down"
+			play_anim(1)
+			velocity.y = speed 
+			velocity.x = 0
+		else:
+			play_anim(0)
+			velocity.x = 0
+			velocity.y = 0
 		
-	move_and_slide()
+		move_and_slide()
 	
-func play_anim(movement):
-	var dir = current_dir
-	var anim = $AnimatedSprite2D
+	func play_anim(movement):
+		var dir = current_dir
+		var anim = $AnimatedSprite2D
 	
-	if dir == "right":
-		anim.flip_h = false
-		if movement == 1:
-			anim.play("Side Walk")
-		elif movement == 0:
-			anim.play("Side Idle")
+		if dir == "right":
+			anim.flip_h = false
+			if movement == 1:
+				anim.play("Side Walk")
+			elif movement == 0:
+				anim.play("Side Idle")
 	
 	
-	if dir == "left":
-		anim.flip_h = true
-		if movement == 1:
-			anim.play("Side Walk")
-		elif movement == 0:
-			anim.play("Side Idle")
+		if dir == "left":
+			anim.flip_h = true
+			if movement == 1:
+				anim.play("Side Walk")
+			elif movement == 0:
+				anim.play("Side Idle")
 	
 	
 	if dir == "down":
